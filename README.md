@@ -69,3 +69,4 @@ Simple shared web app for coordinating summer stays at a family cottage without 
 - Reservation date logic is night-based: `end_date` is checkout and not counted as an overnight stay.
 - If you need to rotate the passcode, update `app_settings.family_passcode_hash`.
 - Keep `SUPABASE_SERVICE_ROLE_KEY` server-only; do not expose it to client code.
+# ephraimscheduler
