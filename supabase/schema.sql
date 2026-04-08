@@ -37,10 +37,10 @@ create table if not exists app_settings (
 
 insert into sleeping_spots (name, capacity, sort_order)
 values
-  ('Bedroom 1', 2, 1),
-  ('Bedroom 2', 2, 2),
-  ('Bedroom 3', 2, 3),
-  ('Porch Couch', 1, 4)
+  ('Grandma''s bedroom', 2, 1),
+  ('Grandpa''s bedroom', 2, 2),
+  ('The lavender room', 2, 3),
+  ('Porch couch', 1, 4)
 on conflict (name) do nothing;
 
 -- SHA256 hex of the word "changeme" — only used if you do NOT set FAMILY_PASSCODE in env.

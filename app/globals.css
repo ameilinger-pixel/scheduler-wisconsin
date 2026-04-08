@@ -2,6 +2,7 @@
 
 :root {
   --background: #f7f5f2;
+  --background-mid: #f0ebe3;
   --foreground: #1c1917;
   --card: #ffffff;
   --accent: #0d9488;
@@ -18,9 +19,46 @@
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
+  background-image: radial-gradient(
+    ellipse 120% 80% at 50% -20%,
+    color-mix(in srgb, var(--background-mid) 85%, white),
+    var(--background)
+  );
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+@media (min-width: 640px) {
+  body {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}
+
+/* Horizontal safe area for notched phones */
+.app-main-pad {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-top: max(0.5rem, env(safe-area-inset-top));
+}
+
+/* Calendar horizontal scroll: momentum on iOS */
+.planner-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Comfortable tap targets for phones */

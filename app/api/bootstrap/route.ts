@@ -2,17 +2,30 @@ import { NextResponse } from "next/server";
 import { isAuthenticated } from "@/lib/auth";
 import { listReservations, getSleepingSpots } from "@/lib/reservations";
 import { getSupabaseServerClient } from "@/lib/supabase";
+import type { ReservationWithSpots } from "@/lib/types";
+
+/** Public schedule: no private notes on the open URL. */
+function reservationsForPublicView(list: ReservationWithSpots[]): ReservationWithSpots[] {
+  return list.map((r) => ({ ...r, notes: null }));
+}
 
 export async function GET() {
-  if (!(await isAuthenticated())) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
   try {
     const [reservations, sleepingSpots] = await Promise.all([
       listReservations(),
       getSleepingSpots(),
     ]);
+
+    const authed = await isAuthenticated();
+
+    if (!authed) {
+      return NextResponse.json({
+        authenticated: false,
+        reservations: reservationsForPublicView(reservations),
+        sleepingSpots,
+        settings: null,
+      });
+    }
 
     const supabase = getSupabaseServerClient();
     const { data: settings, error } = await supabase
@@ -26,6 +39,7 @@ export async function GET() {
     }
 
     return NextResponse.json({
+      authenticated: true,
       reservations,
       sleepingSpots,
       settings,
@@ -37,4 +51,3 @@ export async function GET() {
     );
   }
 }
-

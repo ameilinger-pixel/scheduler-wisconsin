@@ -34,6 +34,8 @@ Simple shared web app for coordinating summer stays at a family cottage without 
 
    - `supabase/schema.sql`
 
+   If you already ran an older seed (Bedroom 1 / Porch Couch, etc.), also run **`supabase/migrate-rename-rooms.sql`** once to rename spots without losing bookings.
+
 4. Set how login works (pick one):
 
    - **Easiest:** add `FAMILY_PASSCODE=your-word` to `.env.local`. The app uses that instead of the Supabase hash.
