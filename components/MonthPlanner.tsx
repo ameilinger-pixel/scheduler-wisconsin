@@ -131,8 +131,8 @@ export function MonthPlanner({
     [onRangeSelect, readOnly, normalizeDragRange],
   );
 
-  const defaultHeading = monthLabel(year, monthIndex0);
-  const titleText = heading ?? defaultHeading;
+  const currentMonthLabel = monthLabel(year, monthIndex0);
+  const titleText = heading ?? currentMonthLabel;
 
   function goPrev() {
     if (monthIndex0 === 0) {
@@ -184,12 +184,17 @@ export function MonthPlanner({
       className={`scroll-mt-28 rounded-2xl border border-stone-200/90 bg-white shadow-md ring-1 ring-stone-200/80 ${compact ? "mb-4 p-3 sm:p-4" : "mb-10 p-4 sm:p-5"}`}
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h2
-          id="month-planner-heading"
-          className="text-lg font-bold text-stone-900 lg:text-xl"
-        >
-          {titleText}
-        </h2>
+        <div>
+          <h2
+            id="month-planner-heading"
+            className="text-lg font-bold text-stone-900 lg:text-xl"
+          >
+            {currentMonthLabel}
+          </h2>
+          {heading ? (
+            <p className="text-sm font-medium text-stone-600">{titleText}</p>
+          ) : null}
+        </div>
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
